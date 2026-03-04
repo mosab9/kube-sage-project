@@ -1,0 +1,53 @@
+namespace: default
+
+loki:
+  image: grafana/loki
+  tag: "2.9.4"
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  storage:
+    size: 10Gi
+  retentionPeriod: 168h
+
+prometheus:
+  image: prom/prometheus
+  tag: "v2.50.1"
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 1Gi
+  storage:
+    size: 10Gi
+  scrapeInterval: 15s
+
+grafana:
+  image: grafana/grafana
+  tag: "10.3.3"
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  storage:
+    size: 5Gi
+
+fluentBit:
+  image: fluent/fluent-bit
+  tag: "3.0.0"
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
