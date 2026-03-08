@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-sage-manager
+  namespace: kubesage
+  labels:
+    app: kube-sage-manager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kube-sage-manager
+  template:
+    metadata:
+      labels:
+        app: kube-sage-manager
+    spec:
+      serviceAccountName: kube-sage-manager
+      containers:
+        - name: kube-sage-manager
+          image: kube-sage-manager:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          env:
+            - name: OLLAMA_URL
+              value: "http://host.k3d.internal:11434"
+            - name: OLLAMA_MODEL
+              value: "llama3.1"
+            - name: LOKI_URL
+              value: "http://loki.monitoring.svc.cluster.local:3100"
+            - name: PROMETHEUS_URL
+              value: "http://prometheus.monitoring.svc.cluster.local:9090"
+          readinessProbe:
+            httpGet:
+              path: /api/v1/health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /api/v1/health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
