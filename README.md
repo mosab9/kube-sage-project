@@ -6,7 +6,7 @@ Kube-sage Runbook:
 
 Helm:
 
-	/Users/musababdelrahman/Desktop/Dev/GitHub/kube-sage/helm
+	cd /kube-sage/helm
 	helm install monitoring ./monitoring
 	helm list
 	kubectl get pods
@@ -20,8 +20,8 @@ Expose service:
 
 Run kube-sage-manager:                                                                                    
                                                                                                                                                    
-  export KUBECONFIG=~/.kube/kubesage-config                                                                                                        
-  export OLLAMA_URL=http://localhost:11434                                                                                                         
+  export KUBECONFIG=~/.kube/kubesage-config                                                                                                     
+  export OLLAMA_URL=http://localhost:11434                                                                                                      
   uvicorn app.main:app --reload --port 8000
 
 Run the kube-sage-web:
